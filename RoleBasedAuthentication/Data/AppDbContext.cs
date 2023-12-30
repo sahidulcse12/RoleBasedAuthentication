@@ -20,7 +20,7 @@ namespace RoleBasedAuthentication.Data
                 (
                 new IdentityRole() { Name = "Admin", ConcurrencyStamp = "1", NormalizedName = "Admin" },
                 new IdentityRole() { Name = "User", ConcurrencyStamp = "2", NormalizedName = "User" },
-                 new IdentityRole() { Name = "HR", ConcurrencyStamp = "3", NormalizedName = "HR" }
+                 new IdentityRole() { Name = "Manager", ConcurrencyStamp = "3", NormalizedName = "Manager" }
 
                 );
         }

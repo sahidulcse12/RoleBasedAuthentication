@@ -10,7 +10,7 @@ using System.Text;
 
 namespace RoleBasedAuthentication.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/authentication")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
@@ -29,7 +29,7 @@ namespace RoleBasedAuthentication.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody] RegisterUser registerUser,string role)
+        public async Task<IActionResult> Register([FromBody] RegisterUser registerUser)
         {
             //Check User Exist
             var userExist = await _userManager.FindByEmailAsync(registerUser.Email);
@@ -45,31 +45,27 @@ namespace RoleBasedAuthentication.Controllers
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = registerUser.Username
             };
-
-            if (await _roleManager.RoleExistsAsync(role))
-            {
-                var result = await _userManager.CreateAsync(user, registerUser.Password);
-                if (!result.Succeeded)
-                {
-                    return StatusCode(StatusCodes.Status500InternalServerError,
-                           new Response { Status = "Error", Message = "User Failed to Create" });
-                }
-
-                await _userManager.AddToRoleAsync(user, role);
-
-                return StatusCode(StatusCodes.Status200OK,
-                       new Response { Status = "Success", Message = "User created successfully" });
-            }
-            else
+            var result = await _userManager.CreateAsync(user, registerUser.Password);
+            if (!result.Succeeded)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                       new Response { Status = "Error", Message = "The Role Does Not Exist" });
+                       new Response { Status = "Error", Message = "User Failed to Create" });
             }
+
+            await _userManager.AddToRoleAsync(user, "Admin");
+
+            return StatusCode(StatusCodes.Status200OK,
+                   new Response { Status = "Success", Message = "User created successfully" });
         }
+            //else
+            //{
+            //    return StatusCode(StatusCodes.Status500InternalServerError,
+            //           new Response { Status = "Error", Message = "The Role Does Not Exist" });
+            //}
+        //}
 
         [HttpPost]
         [Route("login")]
-
         public async Task<IActionResult> Login([FromBody] LoginModel loginModel)
         {
             var user = await _userManager.FindByNameAsync(loginModel.UserName);
@@ -108,7 +104,6 @@ namespace RoleBasedAuthentication.Controllers
                 claims: authClaims,
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );
-
             return token;
         }
     }
