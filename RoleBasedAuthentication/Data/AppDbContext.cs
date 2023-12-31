@@ -24,6 +24,5 @@ namespace RoleBasedAuthentication.Data
                  new IdentityRole() { Name = "User", ConcurrencyStamp = "4", NormalizedName = "User" }
                 );
         }
-        //public DbSet<Staff> Staffs { get; set;}
     }
 }
