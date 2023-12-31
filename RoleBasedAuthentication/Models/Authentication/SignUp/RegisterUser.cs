@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using RoleBasedAuthentication.Models.Authentication.UserRole;
+using System.ComponentModel.DataAnnotations;
 
 namespace RoleBasedAuthentication.Models.Authentication.SignUp
 {
@@ -8,6 +9,8 @@ namespace RoleBasedAuthentication.Models.Authentication.SignUp
 
         public required string Email { get; set; } = string.Empty;
 
-        public required string Password { get; set; } = string.Empty;   
+        public required string Password { get; set; } = string.Empty;
+        public required UserRoles RoleType { get; set; } 
+
     }
 }

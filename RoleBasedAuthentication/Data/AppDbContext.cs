@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace RoleBasedAuthentication.Data
 {
@@ -18,11 +18,12 @@ namespace RoleBasedAuthentication.Data
         {
             builder.Entity<IdentityRole>().HasData
                 (
-                new IdentityRole() { Name = "Admin", ConcurrencyStamp = "1", NormalizedName = "Admin" },
-                new IdentityRole() { Name = "User", ConcurrencyStamp = "2", NormalizedName = "User" },
-                 new IdentityRole() { Name = "Manager", ConcurrencyStamp = "3", NormalizedName = "Manager" }
-
+                 new IdentityRole() { Name = "Admin", ConcurrencyStamp = "1", NormalizedName = "Admin" },
+                 new IdentityRole() { Name = "Manager", ConcurrencyStamp = "3", NormalizedName = "Manager" },
+                 new IdentityRole() { Name = "Staff", ConcurrencyStamp = "2", NormalizedName = "Staff" },
+                 new IdentityRole() { Name = "User", ConcurrencyStamp = "4", NormalizedName = "User" }
                 );
         }
+        //public DbSet<Staff> Staffs { get; set;}
     }
 }

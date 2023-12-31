@@ -51,24 +51,31 @@ namespace RoleBasedAuthentication.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "4c971afa-3b42-4b2e-ac86-e4e0e1a47d2b",
+                            Id = "5e1b93a3-5d4d-479c-b198-899631eb8a57",
                             ConcurrencyStamp = "1",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
-                            Id = "1bb68fb1-3416-4043-8b66-a6dc375fe985",
-                            ConcurrencyStamp = "2",
-                            Name = "User",
-                            NormalizedName = "User"
+                            Id = "4f22aac1-0248-4486-b9c3-cfdd4b1197c4",
+                            ConcurrencyStamp = "3",
+                            Name = "Manager",
+                            NormalizedName = "Manager"
                         },
                         new
                         {
-                            Id = "96214427-fe58-4504-893c-8a7aa74d372d",
-                            ConcurrencyStamp = "3",
-                            Name = "HR",
-                            NormalizedName = "HR"
+                            Id = "3fac1e38-20ef-4644-bcc5-4c9c6f160f35",
+                            ConcurrencyStamp = "2",
+                            Name = "Staff",
+                            NormalizedName = "Staff"
+                        },
+                        new
+                        {
+                            Id = "dd5297d9-b872-4129-afd0-7fea59cd5fd5",
+                            ConcurrencyStamp = "4",
+                            Name = "User",
+                            NormalizedName = "User"
                         });
                 });
 

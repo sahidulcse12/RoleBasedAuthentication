@@ -1,16 +1,17 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Text;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using RoleBasedAuthentication.Models;
+using System.IdentityModel.Tokens.Jwt;
 using RoleBasedAuthentication.Models.Authentication.Login;
 using RoleBasedAuthentication.Models.Authentication.SignUp;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+using RoleBasedAuthentication.Models.Authentication.UserRole;
 
 namespace RoleBasedAuthentication.Controllers
 {
-    [Route("api/authentication")]
+    [Route("api/register")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
@@ -45,24 +46,34 @@ namespace RoleBasedAuthentication.Controllers
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = registerUser.Username
             };
+
             var result = await _userManager.CreateAsync(user, registerUser.Password);
-            if (!result.Succeeded)
+            if (result.Succeeded)
+            {
+                var createdUser = await _userManager.FindByEmailAsync(registerUser.Email);
+                var role = await _roleManager.FindByNameAsync(Enum.GetName(value: registerUser.RoleType) ?? string.Empty);
+
+                if (createdUser != null && role != null)
+                {
+                    await _userManager.AddToRoleAsync(createdUser, role.Name);
+
+                    return StatusCode(StatusCodes.Status200OK,
+                       new Response { Status = "Success", Message = "User created successfully" });
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError,
+                       new Response { Status = "Error", Message = "User or Role not found" });
+                }
+                //return StatusCode(StatusCodes.Status500InternalServerError,
+                //       new Response { Status = "Error", Message = "User Failed to Create" });
+            }
+            else
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                        new Response { Status = "Error", Message = "User Failed to Create" });
             }
-
-            await _userManager.AddToRoleAsync(user, "Admin");
-
-            return StatusCode(StatusCodes.Status200OK,
-                   new Response { Status = "Success", Message = "User created successfully" });
         }
-            //else
-            //{
-            //    return StatusCode(StatusCodes.Status500InternalServerError,
-            //           new Response { Status = "Error", Message = "The Role Does Not Exist" });
-            //}
-        //}
 
         [HttpPost]
         [Route("login")]
