@@ -7,7 +7,8 @@ using RoleBasedAuthentication.Models;
 using System.IdentityModel.Tokens.Jwt;
 using RoleBasedAuthentication.Models.Authentication.Login;
 using RoleBasedAuthentication.Models.Authentication.SignUp;
-using RoleBasedAuthentication.Models.Authentication.UserRole;
+using RoleBasedAuthentication.Data;
+using RoleBasedAuthentication.Models.Authentication;
 
 namespace RoleBasedAuthentication.Controllers
 {
@@ -15,12 +16,12 @@ namespace RoleBasedAuthentication.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
 
         public AuthenticationController(
-                UserManager<IdentityUser> userManager,
+                UserManager<ApplicationUser> userManager,
                 RoleManager<IdentityRole> roleManager,
                 IConfiguration configuration)
         {
@@ -40,7 +41,7 @@ namespace RoleBasedAuthentication.Controllers
                        new Response { Status = "Error", Message = "User already exists!" });
             }
             //Add the user in the database
-            IdentityUser user = new()
+            ApplicationUser user = new()
             {
                 Email = registerUser.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
@@ -65,8 +66,6 @@ namespace RoleBasedAuthentication.Controllers
                     return StatusCode(StatusCodes.Status500InternalServerError,
                        new Response { Status = "Error", Message = "User or Role not found" });
                 }
-                //return StatusCode(StatusCodes.Status500InternalServerError,
-                //       new Response { Status = "Error", Message = "User Failed to Create" });
             }
             else
             {
@@ -81,7 +80,7 @@ namespace RoleBasedAuthentication.Controllers
         {
             var user = await _userManager.FindByNameAsync(loginModel.UserName);
 
-            if(user!=null && await _userManager.CheckPasswordAsync(user, loginModel.Password))
+            if (user != null && await _userManager.CheckPasswordAsync(user, loginModel.Password))
             {
                 var authClaims = new List<Claim>
                 {

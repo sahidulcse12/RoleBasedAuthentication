@@ -15,13 +15,13 @@ namespace RoleBasedAuthentication
             var builder = WebApplication.CreateBuilder(args);
 
             // For Entity Framework
-            var configuaration = builder.Configuration;
-            builder.Services.AddDbContext<AppDbContext>(option => option
-                            .UseSqlServer(configuaration.GetConnectionString("AppDbContext")));
+            var configuration = builder.Configuration;
+            builder.Services.AddDbContext<ApplicationDbContext>(option => option
+                            .UseSqlServer(configuration.GetConnectionString("connector")));
 
             //For Identity
-            builder.Services.AddIdentity<IdentityUser,IdentityRole>()
-                            .AddEntityFrameworkStores<AppDbContext>()
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+                            .AddEntityFrameworkStores<ApplicationDbContext>()
                             .AddDefaultTokenProviders();
 
             //Adding Authentication
@@ -38,9 +38,9 @@ namespace RoleBasedAuthentication
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidAudience = configuaration["JWT:ValidAudience"],
-                    ValidIssuer = configuaration["JWT:ValidIssuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuaration["JWT:Secret"]))
+                    ValidAudience = configuration["JWT:ValidAudience"],
+                    ValidIssuer = configuration["JWT:ValidIssuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
                 };
             });
 

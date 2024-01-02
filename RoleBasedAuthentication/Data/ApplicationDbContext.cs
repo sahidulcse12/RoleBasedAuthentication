@@ -1,16 +1,31 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using RoleBasedAuthentication.Models.Authentication;
 
 namespace RoleBasedAuthentication.Data
 {
-    public class AppDbContext : IdentityDbContext<IdentityUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+
+        public DbSet<Staff> Staffs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<ApplicationUser>(b =>
+            {
+                b.Property(e => e.ConcurrencyStamp).HasColumnName("RoleId");
+            });
+
+            builder.Entity<ApplicationUser>()
+            .HasOne(u => u.Staff)
+            .WithOne(t => t.ApplicationUser)
+            .HasForeignKey<Staff>(b=>b.UserId)
+            .IsRequired(false);
+
             SeedRoles(builder);
         }
 

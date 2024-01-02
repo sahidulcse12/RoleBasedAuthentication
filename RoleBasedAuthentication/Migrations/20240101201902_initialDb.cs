@@ -39,7 +39,7 @@ namespace RoleBasedAuthentication.Migrations
                     EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RoleId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
@@ -163,10 +163,10 @@ namespace RoleBasedAuthentication.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "3fac1e38-20ef-4644-bcc5-4c9c6f160f35", "2", "Staff", "Staff" },
-                    { "4f22aac1-0248-4486-b9c3-cfdd4b1197c4", "3", "Manager", "Manager" },
-                    { "5e1b93a3-5d4d-479c-b198-899631eb8a57", "1", "Admin", "Admin" },
-                    { "dd5297d9-b872-4129-afd0-7fea59cd5fd5", "4", "User", "User" }
+                    { "783a7224-8789-451c-92ad-c6bfa46df173", "2", "Staff", "Staff" },
+                    { "80dbb559-afa0-472f-adec-902da1ea5d84", "1", "Admin", "Admin" },
+                    { "b720cfdd-3826-4a54-a0a9-880a9ec9b774", "3", "Manager", "Manager" },
+                    { "faf3e1ab-a730-4d3f-a6d8-f5bff1605b60", "4", "User", "User" }
                 });
 
             migrationBuilder.CreateIndex(
