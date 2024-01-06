@@ -1,14 +1,13 @@
 ﻿using System.Text;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
+using RoleBasedAuthentication.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using RoleBasedAuthentication.Models;
 using System.IdentityModel.Tokens.Jwt;
 using RoleBasedAuthentication.Models.Authentication.Login;
 using RoleBasedAuthentication.Models.Authentication.SignUp;
-using RoleBasedAuthentication.Data;
-using RoleBasedAuthentication.Models.Authentication;
 
 namespace RoleBasedAuthentication.Controllers
 {
@@ -17,12 +16,12 @@ namespace RoleBasedAuthentication.Controllers
     public class AuthenticationController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<IdentityRole<Guid>> _roleManager;
         private readonly IConfiguration _configuration;
 
         public AuthenticationController(
                 UserManager<ApplicationUser> userManager,
-                RoleManager<IdentityRole> roleManager,
+                RoleManager<IdentityRole<Guid>> roleManager,
                 IConfiguration configuration)
         {
             _userManager = userManager;
@@ -43,20 +42,22 @@ namespace RoleBasedAuthentication.Controllers
             //Add the user in the database
             ApplicationUser user = new()
             {
+                FirstName = registerUser.FirstName,
+                LastName = registerUser.LastName,
                 Email = registerUser.Email,
+                UserName = registerUser.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = registerUser.Username
             };
 
             var result = await _userManager.CreateAsync(user, registerUser.Password);
             if (result.Succeeded)
             {
                 var createdUser = await _userManager.FindByEmailAsync(registerUser.Email);
-                var role = await _roleManager.FindByNameAsync(Enum.GetName(value: registerUser.RoleType) ?? string.Empty);
+                var role = registerUser.RoleType.ToString();
 
-                if (createdUser != null && role != null)
+                if (createdUser != null && !role.IsNullOrEmpty())
                 {
-                    await _userManager.AddToRoleAsync(createdUser, role.Name);
+                    await _userManager.AddToRoleAsync(createdUser, role);
 
                     return StatusCode(StatusCodes.Status200OK,
                        new Response { Status = "Success", Message = "User created successfully" });

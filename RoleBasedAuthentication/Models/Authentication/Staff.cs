@@ -1,6 +1,5 @@
 ﻿using RoleBasedAuthentication.Data;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RoleBasedAuthentication.Models.Authentication
 {
@@ -8,9 +7,9 @@ namespace RoleBasedAuthentication.Models.Authentication
     {
         [Key]
         public Guid Id { get; set; }
-        public string UserId {  get; set; }
         public Guid BranchId { get; set; }
         public Guid RestaurantId { get; set; }
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        public Guid ApplicationUserId { get; set; } = default!;
+        public virtual ApplicationUser? ApplicationUser { get; set; }
     }
 }

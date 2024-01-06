@@ -20,9 +20,10 @@ namespace RoleBasedAuthentication
                             .UseSqlServer(configuration.GetConnectionString("connector")));
 
             //For Identity
-            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-                            .AddEntityFrameworkStores<ApplicationDbContext>()
-                            .AddDefaultTokenProviders();
+            builder.Services
+                .AddIdentity<ApplicationUser, IdentityRole<Guid>>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
             //Adding Authentication
             builder.Services.AddAuthentication(options =>
