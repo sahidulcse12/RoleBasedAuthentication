@@ -1,8 +1,8 @@
 ﻿using RoleBasedAuthentication.Models.Authentication.UserRole;
 
-namespace RoleBasedAuthentication.Models.Authentication.SignUp
+namespace RoleBasedAuthentication.Models.Authentication.MobileUserSignUp
 {
-    public class RegisterUser
+    public class User
     {
         public required string FirstName { get; set; } = default!;
 
@@ -10,7 +10,7 @@ namespace RoleBasedAuthentication.Models.Authentication.SignUp
 
         public required string Email { get; set; } = default!;
         public required string Password { get; set; } = default!;
-        public required UserRoles RoleType { get; set; } 
-
+        public string phone {  get; set; } = default!;
+        //public required UserRoles RoleType { get; set; }
     }
 }

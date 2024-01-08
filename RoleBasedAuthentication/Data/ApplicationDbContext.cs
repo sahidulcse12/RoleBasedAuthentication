@@ -30,7 +30,7 @@ namespace RoleBasedAuthentication.Data
                 (
                  new IdentityRole<Guid>() { Id = Guid.NewGuid(), Name = "Admin", ConcurrencyStamp = "1", NormalizedName = "Admin" },
                  new IdentityRole<Guid>() { Id = Guid.NewGuid(), Name = "Manager", ConcurrencyStamp = "3", NormalizedName = "Manager" },
-                 new IdentityRole<Guid>() { Id = Guid.NewGuid(), Name = "Staff", ConcurrencyStamp = "2", NormalizedName = "Staff" },
+                 new IdentityRole<Guid>() { Id = Guid.NewGuid(), Name = "Waiter", ConcurrencyStamp = "2", NormalizedName = "Waiter" },
                  new IdentityRole<Guid>() { Id = Guid.NewGuid(), Name = "User", ConcurrencyStamp = "4", NormalizedName = "User" }
                 );
         }

@@ -52,28 +52,28 @@ namespace RoleBasedAuthentication.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("e2d63c72-3013-4243-bef6-e8f38deaf6eb"),
+                            Id = new Guid("8b84887b-54e4-4078-81ef-2c4eb9d349fa"),
                             ConcurrencyStamp = "1",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
-                            Id = new Guid("3d95de56-ba66-40ef-9946-dd05cc3f8d6f"),
+                            Id = new Guid("20eef818-b493-4d1f-9926-e922e3ee2d73"),
                             ConcurrencyStamp = "3",
                             Name = "Manager",
                             NormalizedName = "Manager"
                         },
                         new
                         {
-                            Id = new Guid("1c3c9a22-25b4-4d16-aae1-0ffb9dfd5187"),
+                            Id = new Guid("702055b3-133a-43f1-a022-b42f5ac459fc"),
                             ConcurrencyStamp = "2",
-                            Name = "Staff",
-                            NormalizedName = "Staff"
+                            Name = "Waiter",
+                            NormalizedName = "Waiter"
                         },
                         new
                         {
-                            Id = new Guid("14f7decf-693b-4f93-a09b-248a4a3f897a"),
+                            Id = new Guid("89d6b371-83a6-4919-a438-832aab949500"),
                             ConcurrencyStamp = "4",
                             Name = "User",
                             NormalizedName = "User"

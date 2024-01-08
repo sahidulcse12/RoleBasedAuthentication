@@ -6,6 +6,6 @@
         User = 1,
         Admin = 2,
         Manager = 3,
-        Staff = 4
+        Waiter = 4
     }
 }
