@@ -1,15 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using System.Text;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using RoleBasedAuthentication.Data;
 using RoleBasedAuthentication.Models;
+using System.IdentityModel.Tokens.Jwt;
 using RoleBasedAuthentication.Models.Authentication.MobileUserLogin;
 using RoleBasedAuthentication.Models.Authentication.MobileUserSignUp;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace RoleBasedAuthentication.Controllers
 {
@@ -33,7 +31,7 @@ namespace RoleBasedAuthentication.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] User mobileUser)
-        {
+       {
             //Check User Exist
             var userExist = await _userManager.FindByEmailAsync(mobileUser.Email);
             if (userExist != null)
@@ -109,7 +107,7 @@ namespace RoleBasedAuthentication.Controllers
 
         private JwtSecurityToken GetToken(List<Claim> authClaims)
         {
-            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:SecretKey"]));
 
             var token = new JwtSecurityToken(
                 issuer: _configuration["JWT:ValidIssuer"],
